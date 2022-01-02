@@ -1,0 +1,2129 @@
+
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:等线;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@等线";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:等线;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 字符";
+	margin:0cm;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:等线;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 字符";
+	margin:0cm;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:等线;}
+span.a
+	{mso-style-name:"页眉 字符";
+	mso-style-link:页眉;}
+span.a0
+	{mso-style-name:"页脚 字符";
+	mso-style-link:页脚;}
+.MsoChpDefault
+	{font-family:等线;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN style='word-wrap:break-word;text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal><span lang=EN-US># Function to check and install packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>check.packages &lt;- function(pkg){</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; new.pkg &lt;- pkg[!(pkg %in%
+installed.packages()[, &quot;Package&quot;])]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; if (length(new.pkg)) </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;
+install.packages(new.pkg, dependencies = TRUE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; sapply(pkg, require, character.only
+= TRUE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>}</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Checks and installs packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>packages &lt;- c(&quot;ggplot2&quot;,
+&quot;ggspatial&quot;, &quot;here&quot;, &quot;raster&quot;, &quot;sf&quot;,
+&quot;whitebox&quot;, # Practical-1</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;data.table&quot;, &quot;dplyr&quot;, &quot;forcats&quot;,
+&quot;MASS&quot;, &quot;units&quot;) # Practical-2 </span></p>
+
+<p class=MsoNormal><span lang=EN-US>check.packages(packages)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Sets file path for DEM</span></p>
+
+<p class=MsoNormal><span lang=EN-US>dem &lt;- here(&quot;data&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_fill.tif&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>dem</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates D8 pointer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_d8_pointer(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_D8_pointer.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates D8 accumulation file (SCA),
+with log-transformed values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_d8_flow_accumulation(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_flow_accumulation.tif&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+out_type = &quot;specific contributing area&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+log = &quot;TRUE&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates FD8 accumulation file (SCA),
+with log-transformed values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_fd8_flow_accumulation(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;dem_10m_flow_accumulation_fd8.tif&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+out_type = &quot;specific contributing area&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+log = &quot;TRUE&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exponent
+= 1.1)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates D-Infinity accumulation file
+(SCA), with log-transformed value </span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_d_inf_flow_accumulation(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;dem_10m_flow_accumulation_d_inf.tif&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+out_type = &quot;specific contributing area&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+log = &quot;TRUE&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads acccumulation files using raster
+and here packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_accumulation &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_flow_accumulation.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>eskdale_fd8 &lt;- raster(here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;dem_10m_flow_accumulation_fd8.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>eskdale_d_inf &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;dem_10m_flow_accumulation_d_inf.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots D8 using ggplot2</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p_d8 &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds raster layer using
+layer_spatial</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(eskdale_d8, aes(fill =
+stat(band1))) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets ggplot theme</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Axis and legend labeling</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Flow accumulation
+value&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+title=&quot;D8&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets fill symbology</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_continuous(type =
+&quot;viridis&quot;,&nbsp; na.value = NA) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Removes legend, sets title size</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;none&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+plot.title = element_text(hjust = 0.5))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots FD8 using ggplot2</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p_fd8 &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds raster layer using
+layer_spatial</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(eskdale_fd8, aes(fill
+= stat(band1))) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets ggplot theme</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Axis and legend labeling</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Flow accumulation
+value&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+title=&quot;FD8&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets fill symbology</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_continuous(type =
+&quot;viridis&quot;,&nbsp; na.value = NA) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets legend location and axis
+labeling </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;bottom&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(axis.title.y=element_blank(),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+axis.text.y=element_blank(),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+axis.ticks.y=element_blank(),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+plot.title = element_text(hjust = 0.5))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots D-Infinity using ggplot2</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p_dinf &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds raster layer using
+layer_spatial</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(eskdale_d_inf,
+aes(fill = stat(band1))) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets ggplot theme</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Axis and legend labeling</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Flow accumulation
+value&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+title=&quot;D-Infinity&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_continuous(type =
+&quot;viridis&quot;,&nbsp; na.value = NA) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Sets fill symbology</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;top&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Removes legend and sets axis
+labeling </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(axis.title.y=element_blank(),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+axis.text.y=element_blank(),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+axis.ticks.y=element_blank(), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+legend.position = &quot;none&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+plot.title = element_text(hjust = 0.5))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Combines using the patchwork library</span></p>
+
+<p class=MsoNormal><span lang=EN-US>combined_plot &lt;- p_d8</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Displays figure</span></p>
+
+<p class=MsoNormal><span lang=EN-US>combined_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads flow accumulation raster using the
+raster and here packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_accumulation &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_flow_accumulation.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads EA monitoring sites using the
+st_read function</span></p>
+
+<p class=MsoNormal><span lang=EN-US>seed_points &lt;-
+st_read(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_EA_sites.shp&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Crops the accumulation raster based on a
+defined extent (row and col indexes) </span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_accumulation_crop &lt;-
+crop(mersey_accumulation, extent(mersey_accumulation,&nbsp; 632, 645, 540,
+578))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots using ggplot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;
+layer_spatial(mersey_accumulation_crop, aes(fill = stat(band1))) + # Adds
+raster layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; annotation_spatial(data =
+seed_points, shape = 21, fill = &quot;#FFFFFF&quot;, colour = &quot;black&quot;,
+size = 3) + # Adds vector layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Log-transformed
+flow accumulation value&quot;, x = &quot;Easting&quot;, y =
+&quot;Northing&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_continuous(type =
+&quot;viridis&quot;,&nbsp; na.value = NA) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;top&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates D8 Upslope</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_d8_flow_accumulation(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_D8_flow_accumulation_NUE.tif&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+out_type = &quot;cells&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stream network</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_extract_streams(here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_D8_flow_accumulation_NUE.tif&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_streams_act200.tif&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+threshold = 200, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+zero_background = &quot;TRUE&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Snapping</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_jenson_snap_pour_points(here(&quot;data&quot;,
+&quot;practical_2&quot;, &quot;mersey_EA_sites.shp&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_streams_act200.tif&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_EA_sites_snapped.shp&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+snap_dist = 500)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads streams raster using the raster and
+here packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_streams &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_streams_act200.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Crops the streams raster based on a
+defined extent (row and col indexes) </span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_streams_crop &lt;- crop(mersey_streams,
+extent(mersey_streams,&nbsp; 632, 645, 540, 578))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads original and snapped EA monitoring
+sites using the st_read function</span></p>
+
+<p class=MsoNormal><span lang=EN-US>seed_points &lt;-
+st_read(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_EA_sites.shp&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>snapped_seed_points &lt;-
+st_read(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_EA_sites_snapped.shp&quot;))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots using ggplot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(mersey_streams_crop,
+aes(fill = stat(band1))) + # Adds raster layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; annotation_spatial(data =
+seed_points, shape = 21, fill = &quot;#FFFFFF&quot;, colour =
+&quot;black&quot;, size = 3) + # Adds seeds layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; annotation_spatial(data =
+snapped_seed_points, shape = 21, fill = &quot;#FB5858&quot;, colour =
+&quot;black&quot;, size = 3) + # Adds snapped seeds layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Stream network
+ID&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_continuous(type =
+&quot;viridis&quot;,&nbsp; na.value = NA) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;top&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Watershed</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_watershed(here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_D8_pointer.tif&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_EA_sites_snapped.shp&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_watersheds.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads streams raster using the raster and
+here packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_watersheds &lt;- raster(here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_watersheds.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots using ggplot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(mersey_watersheds,
+aes(fill = stat(band1))) + # Adds raster layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; annotation_spatial(data =
+snapped_seed_points, shape = 21, fill = &quot;#FB5858&quot;, colour =
+&quot;black&quot;, size = 3) + # Adds snapped seeds layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Stream
+network&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_continuous(type =
+&quot;viridis&quot;,&nbsp; na.value = NA) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;top&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p </span></p>
+
+<p class=MsoNormal><span lang=EN-US># Converts watershed to vector format
+(polygon)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_raster_to_vector_polygons(here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_watersheds.tif&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+here(&quot;output&quot;, &quot;practical_2&quot;, &quot;mersey_watersheds.shp&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 10</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Land cover</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads land cover raster</span></p>
+
+<p class=MsoNormal><span lang=EN-US>land_cover &lt;-
+raster(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_LC.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Converts the land cover raster to a
+factor, overwriting the original variable</span></p>
+
+<p class=MsoNormal><span lang=EN-US>land_cover &lt;- as.factor(land_cover)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>unique(land_cover)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Categories of interest</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories &lt;- as.data.frame(c(41, 42,
+43, 91, 101, 102, 51, 52, 61, 71, 81, 171, 172, 111, 121))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(categories) &lt;- &quot;ID&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Collapse categories into groups based on
+ID</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories$name &lt;-
+fct_collapse(as.factor(categories$ID),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Arable&quot; = c(&quot;41&quot;, &quot;42&quot;, &quot;43&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Heath&quot; = c(&quot;91&quot;, &quot;101&quot;, &quot;102&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Grassland&quot; = c(&quot;51&quot;, &quot;52&quot;, &quot;61&quot;,
+&quot;71&quot;, &quot;81&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Urban&quot; = c(&quot;171&quot;, &quot;172&quot;), </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&quot;Wetland&quot; = c(&quot;111&quot;, &quot;121&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints categories data frame</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Substitutes raster values with new
+categories</span></p>
+
+<p class=MsoNormal><span lang=EN-US>land_cover_classified &lt;-
+subs(land_cover, categories)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Write to new raster</span></p>
+
+<p class=MsoNormal><span lang=EN-US>writeRaster(land_cover_classified,
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_LC_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(categories)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads land cover raster using the raster
+and here packages</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_land_cover &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_LC_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Plots using ggplot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(mersey_land_cover,
+aes(fill = stat(band1))) + # Adds raster layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Land cover
+class&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_distiller(palette =
+&quot;RdYlBu&quot;, na.value = NA) + # Updated fill aesthetic</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position = &quot;top&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># HOST</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loads mersey_HOST raster</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_HOST &lt;-
+raster(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_HOST.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_HOST &lt;- as.factor(mersey_HOST)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>unique(mersey_HOST)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories &lt;- as.data.frame(c(1, 3, 4,
+5, 6, 7, 15, 16, 12, 17, 18, 19, 21, 22, 8, 9, 13, 24, 10, 11, 14, 25, 26, 27,
+29))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(categories) &lt;- &quot;ID&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(categories)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories$name &lt;-
+fct_collapse(as.factor(categories$ID),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Permeable&quot; = c(&quot;1&quot;, &quot;3&quot;, &quot;4&quot;,
+&quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;15&quot;, &quot;16&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Impermeable&quot;
+= c(&quot;12&quot;, &quot;17&quot;, &quot;18&quot;, &quot;19&quot;,
+&quot;21&quot;, &quot;22&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Gleyed&quot; = c(&quot;8&quot;, &quot;9&quot;, &quot;13&quot;,
+&quot;24&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Peats&quot; = c(&quot;10&quot;, &quot;11&quot;, &quot;14&quot;,
+&quot;25&quot;, &quot;26&quot;, &quot;27&quot;,&quot;29&quot;)) </span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_HOST_classified &lt;-
+subs(mersey_HOST, categories)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>writeRaster(mersey_HOST_classified,
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_HOST_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>merseymersey_HOST &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_HOST_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p &lt;- ggplot() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; layer_spatial(merseymersey_HOST,
+aes(fill = stat(band1))) + # Adds raster layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() + </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(fill = &quot;Hydrology of Soil
+Types class&quot;, x = &quot;Easting&quot;, y = &quot;Northing&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; scale_fill_distiller(palette =
+&quot;RdYlBu&quot;, na.value = NA) + # Updated fill aesthetic</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(legend.position =
+&quot;top&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>p </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Bedrock geology</span></p>
+
+<p class=MsoNormal><span lang=EN-US>bedrock &lt;- raster(here(&quot;data&quot;,
+&quot;practical_2&quot;, &quot;mersey_bedrock.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>bedrock &lt;- as.factor(bedrock)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>unique(bedrock)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories &lt;- as.data.frame(c(5, 16, 18,
+24, 28, 34, 10, 11, 17, 19, 9, 15, 22))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(categories) &lt;- &quot;ID&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(categories)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories$name &lt;-
+fct_collapse(as.factor(categories$ID),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Sands_and_Muds &quot; = c(&quot;5&quot;, &quot;16&quot;, &quot;18&quot;,
+&quot;24&quot;, &quot;28&quot;, &quot;34&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Limestone&quot; = c(&quot;10&quot;, &quot;11&quot;, &quot;17&quot;,
+&quot;19&quot;),</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;Coal&quot; = c(&quot;9&quot;, &quot;15&quot;, &quot;22&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categories&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal><span lang=EN-US>bedrock_classified &lt;- subs(bedrock,
+categories)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>writeRaster(bedrock_classified,
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_bedrock_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 10.2 Calculating surface derivatives</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_slope(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_slope.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>wbt_aspect(dem,here(&quot;output&quot;,
+&quot;practical_2&quot;, &quot;mersey_dem_aspect.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 10.3 Extracting surface derivatives</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds &lt;-
+st_read(here(&quot;output&quot;, &quot;practical_2&quot;, &quot;mersey_watersheds.shp&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(watersheds)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Replaces column name 'VALUE' with
+'SEED_Point_ID'</span></p>
+
+<p class=MsoNormal><span lang=EN-US>names(watersheds)[names(watersheds) ==
+'VALUE'] &lt;- 'Seed_Point_ID'</span></p>
+
+<p class=MsoNormal><span lang=EN-US>ea_data &lt;-
+read.csv(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_EA_chemistry.csv&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea &lt;- merge(watersheds,
+ea_data, by = &quot;Seed_Point_ID&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Spatial areas</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates area geometry using st_area()</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$area &lt;-
+st_area(watersheds_ea)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates area geometry using st_area(),
+converting to km^2 using the units package</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$area &lt;-
+set_units(st_area(watersheds_ea), km^2)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Load elevation raster</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_dem &lt;-
+raster(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_fill.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Calculates the number of raster cells per
+watershed </span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$count &lt;-
+extract(mersey_dem, watersheds_ea, fun=function(x, ...) length(x)) </span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea$count)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Continuous derivatives</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Load</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_dem &lt;-
+raster(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_fill.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_rainfall &lt;-
+raster(here(&quot;data&quot;, &quot;practical_2&quot;,
+&quot;mersey_rainfall.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_slope &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_slope.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_aspect &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_dem_aspect.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Extracts raster values for each
+watershed, calculates mean (fun=mean), and stores in attribute table
+($average_elevation)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$average_elevation &lt;-
+extract(mersey_dem, watersheds_ea, fun=mean, na.rm=TRUE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$average_rainfall &lt;-
+extract(mersey_rainfall, watersheds_ea, fun=mean, na.rm=TRUE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$mersey_slope &lt;- extract(mersey_slope,
+watersheds_ea, fun=mean, na.rm=TRUE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea$mersey_aspect &lt;-
+extract(mersey_aspect, watersheds_ea, fun=mean, na.rm=TRUE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea$average_elevation)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea$average_rainfall)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea$mersey_slope)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea$mersey_aspect)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 10.3.4 Calculating categorical
+derivatives</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Load</span></p>
+
+<p class=MsoNormal><span lang=EN-US>mersey_land_cover &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_LC_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>merseymersey_HOST &lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_HOST_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>merseymersey_bedrock&lt;-
+raster(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_bedrock_reclass.tif&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Extract land cover counts (5 classes so
+levels = 1:5)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>land_cover_classes &lt;-
+extract(mersey_land_cover, watersheds_ea, fun=function(i,...) table(factor(i,
+levels = 1:5)))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(land_cover_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(land_cover_classes) &lt;-
+c(&quot;Arable&quot;, &quot;Heath&quot;, &quot;Grassland&quot;,
+&quot;Urban&quot;, &quot;Wetland&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(land_cover_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Extract HOST counts</span></p>
+
+<p class=MsoNormal><span lang=EN-US>HOST_classes &lt;-
+extract(merseymersey_HOST, watersheds_ea, fun=function(i,...) table(factor(i,
+levels = 1:4)))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(HOST_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(HOST_classes) &lt;-
+c(&quot;Permeable&quot;, &quot;Impermeable&quot;, &quot;Gleyed&quot;,
+&quot;Peats&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(HOST_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Extract bedrock counts</span></p>
+
+<p class=MsoNormal><span lang=EN-US>bedrock_classes &lt;-
+extract(merseymersey_bedrock, watersheds_ea, fun=function(i,...)
+table(factor(i, levels = 1:3)))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(bedrock_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(bedrock_classes) &lt;-
+c(&quot;Sands_and_Muds&quot;, &quot;Limestone&quot;, &quot;Coal&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(bedrock_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Combines watersheds data frame with
+categorical counts</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea &lt;- cbind(watersheds_ea,
+land_cover_classes, HOST_classes, bedrock_classes)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 10.3.5 Normalising categorical
+derivatives</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates vector of categorical variables</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categorical_names &lt;-
+c(&quot;Arable&quot;, &quot;Heath&quot;, &quot;Grassland&quot;,
+&quot;Urban&quot;, &quot;Wetland&quot;, &quot;Permeable&quot;,
+&quot;Impermeable&quot;, &quot;Gleyed&quot;, &quot;Peats&quot;,
+&quot;Sands_and_Muds&quot;, &quot;Limestone&quot;, &quot;Coal&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints vector</span></p>
+
+<p class=MsoNormal><span lang=EN-US>categorical_names</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loops through each element of
+categorical_names and stores it in variable &quot;i&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>for (i in categorical_names){</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Prints element stored in i</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; print(i)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>}</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loops through each element of
+categorical_names and stores it in variable &quot;i&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>for (i in categorical_names){</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Creates a new column name using
+the variable &quot;i&quot; and the string &quot;percent&quot;, separated by an
+underscore.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; col &lt;- paste(i,
+&quot;percent&quot;, sep=&quot;_&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Prints new column name</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; print(col)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>}</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Loops through each element of
+categorical_names and stores it in variable &quot;i&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>for (i in categorical_names){</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Creates a new column name using
+the variable &quot;i&quot; and the string &quot;percent&quot;, separated by an
+underscore.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; col &lt;- paste(i,
+&quot;percent&quot;, sep=&quot;_&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;# Updates watersheds_ea with
+the percentage cover of each category</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; watersheds_ea[col] &lt;-
+as.numeric(watersheds_ea[[i]]/watersheds_ea$count*100)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>}</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Drops geometry attribute from
+watersheds_ea</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_ea &lt;-
+st_drop_geometry(watersheds_ea)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Writes data frame to comma-separated file</span></p>
+
+<p class=MsoNormal><span lang=EN-US>write.csv(x = watersheds_ea,
+here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_watersheds_ea.csv&quot;), row.names=FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(watersheds_ea)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11 Statistical analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Reads completed file from csv</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df &lt;-
+read.csv(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_watersheds_ea.csv&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = NO2 ~
+average_elevation, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = NO2 ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>format(c(-2.096e-04, -8.358e-06, 3.828e-06,
+9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names, including
+only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(NO2 =
+watersheds_df$NO2, variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>no2_model &lt;- lm(formula = NO2 ~ ., data
+= model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(no2_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(no2_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(no2_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 4)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_no2 &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) NO2 values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>no2_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_no2, y = NO2)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled NO2&quot;, y
+= &quot;Measured NO2&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~NO[2]~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>no2_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<span lang=EN-US style='font-size:10.5pt;font-family:等线'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11 Statistical analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Reads completed file from csv</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df &lt;-
+read.csv(here(&quot;output&quot;, &quot;practical_2&quot;,
+&quot;mersey_watersheds_ea.csv&quot;))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = NO2 ~
+average_elevation, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>colnames(watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = ph ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>format(c(-2.096e-04, -8.358e-06, 3.828e-06,
+9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(ph = watersheds_df$ph,
+variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>ph_model &lt;- lm(formula = ph ~ ., data =
+model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(ph_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(ph_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(ph_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_ph &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>ph_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_ph, y = ph)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled ph&quot;, y
+= &quot;Measured ph&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~ph~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>ph_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = SSC ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(SSC =
+watersheds_df$SSC, variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>SSC_model &lt;- lm(formula = SSC ~ ., data
+= model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(SSC_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(SSC_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(SSC_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_SSC &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>SSC_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_SSC, y = SSC)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled SSC&quot;, y
+= &quot;Measured SSC&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~SSC~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>SSC_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = Ca ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06, 3.828e-06,
+9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(Ca = watersheds_df$Ca,
+variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Ca_model &lt;- lm(formula = Ca ~ ., data =
+model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(Ca_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(SSC_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(Ca_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;direction
+= &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_Ca &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Ca_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_Ca, y = Ca)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled Ca&quot;, y
+= &quot;Measured Ca&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~Ca~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Ca_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = Mg ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(Mg = watersheds_df$Mg,
+variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Mg_model &lt;- lm(formula = Mg ~ ., data =
+model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(Mg_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(Mg_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(Mg_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 2)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_Mg &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Mg_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_Mg, y = Mg)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled Mg&quot;, y
+= &quot;Measured Mg&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~Mg~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Mg_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = NH4 ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(NH4 =
+watersheds_df$NH4, variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>NH4_model &lt;- lm(formula = NH4 ~ ., data
+= model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(NH4_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(NH4_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(NH4_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_NH4 &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>NH4_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_NH4, y = NH4)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled NH4&quot;, y
+= &quot;Measured NH4&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~NH4~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>NH4_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = NO3 ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(NO3 =
+watersheds_df$NO3, variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>NO3_model &lt;- lm(formula = NO3 ~ ., data
+= model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(NO3_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(NO3_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(NO3_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_NO3 &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>NO3_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_NO3, y = NO3)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled NO3&quot;, y
+= &quot;Measured NO3&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~NO3~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>NO3_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = TON ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(TON =
+watersheds_df$TON, variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>TON_model &lt;- lm(formula = TON ~ ., data
+= model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(TON_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(TON_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(TON_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_TON &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>TON_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_TON, y = TON)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled TON&quot;, y
+= &quot;Measured TON&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~TON~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>TON_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = PO4 ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(PO4 =
+watersheds_df$PO4, variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>PO4_model &lt;- lm(formula = PO4 ~ ., data
+= model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(PO4_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(PO4_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(PO4_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 4)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_PO4 &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>PO4_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_PO4, y = PO4)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled PO4&quot;, y
+= &quot;Measured PO4&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~PO4~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>PO4_plot</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>model &lt;- lm(formula = Zn ~
+average_elevation + average_rainfall, data = watersheds_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(-2.096e-04, scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#format(c(-2.096e-04, -8.358e-06,
+3.828e-06, 9.525e-02,3.198e-02, 8.951e-05, 5.450e-05) , scientific = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># 11.1.2 Stepwise regression</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Creates a vector of column names,
+including only those which contain &quot;average&quot; or &quot;percent&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors &lt;- colnames(watersheds_df %&gt;%
+dplyr::select(contains(c(&quot;average&quot;,
+&quot;percent&quot;,&quot;mersey_slope&quot;,&quot;mersey_aspect&quot;))))</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Prints to console</span></p>
+
+<p class=MsoNormal><span lang=EN-US>factors</span></p>
+
+<p class=MsoNormal><span lang=EN-US>variables &lt;- watersheds_df[factors]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>#head(variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Column bind the NO2 column from
+watersheds_df with the data frame containing all the independent variables </span></p>
+
+<p class=MsoNormal><span lang=EN-US>model_df &lt;- cbind(Zn = watersheds_df$Zn,
+variables)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Fits a linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Zn_model &lt;- lm(formula = Zn ~ ., data =
+model_df)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>head(Zn_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(Zn_model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Stepwise regression model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>step.model &lt;- stepAIC(Zn_model, # Input
+linear model</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+direction = &quot;both&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+trace = FALSE, # Print out intermediate results? </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+k = 3)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>summary(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Error analysis</span></p>
+
+<p class=MsoNormal><span lang=EN-US># Predicts based on upon stepwise model,
+saving to watersheds dataframe</span></p>
+
+<p class=MsoNormal><span lang=EN-US>watersheds_df$predicted_Zn &lt;-
+predict(step.model)</span></p>
+
+<p class=MsoNormal><span lang=EN-US># ggplot of measured vs. modelled
+(predicted) ph values</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Zn_plot &lt;- ggplot(data = watersheds_df,
+aes(x = predicted_Zn, y = Zn)) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adds the point data, modifying the
+shape, size, colour and fill</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_point(shape = 21, colour =
+&quot;black&quot;, fill = &quot;#5695FF&quot;, size = 1.5) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a linear regression
+(&quot;lm&quot;), removing standard error bars (se = FALSE)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_smooth(method = &quot;lm&quot;,
+se = FALSE, colour = &quot;#FF7A71&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Adding a 1:1 line for comparison</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; geom_abline(intercept = 0, slope =
+1, lty = &quot;dashed&quot;) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Setting the theme and aspect ratio</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme_classic() +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; theme(aspect.ratio = 1) +</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; # Add axis labels and a title</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; labs(x = &quot;Modelled Zn&quot;, y
+= &quot;Measured Zn&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title
+= bquote('Plot of measured vs. modelled'~Zn~'values'))</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Zn_plot</span></p>
+
+</div>
+
+</body>
+
+</html>
